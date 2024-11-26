@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/common_provider.dart';
+import '../provider/dashboard_provider.dart';
 import '../utils/color_resource.dart';
 
 class Setting extends StatefulWidget {
@@ -19,7 +19,7 @@ class _Setting extends State<Setting> {
   String? _selectedCategory;
   @override
   Widget build(BuildContext context) {
-    CommonProvider commonProvider = context.read<CommonProvider>();
+    DashBoardProvider commonProvider = context.read<DashBoardProvider>();
     _selectedUnit = commonProvider.unitSymbol;
     _selectedCategory = commonProvider.headlineCategory;
     return SafeArea(

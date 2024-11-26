@@ -24,6 +24,14 @@ class AppConstant {
   static String sLongitude = 'Longitude';
   static String sLatitude = 'Latitude';
 
+  static const sNoInternetConnection = "No internet connection.";
+
+  static const sTimeOut = "Response timed-out.";
+
+  static const sErrorOccurred = "Error occurred.";
+
+  static bool isCitiesAdded = false;
+
   static String calculateTimeDifferenceBetween({required DateTime startDate, required DateTime endDate}) {
     int seconds = endDate.difference(startDate).inSeconds;
     if (seconds < 60) {
