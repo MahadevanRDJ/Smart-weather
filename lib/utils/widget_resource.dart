@@ -17,6 +17,8 @@ class WidgetResource {
 
   static AlertDialog getLoader(context) => _loader;
 
+  static showAlert(context, message) => _alert(context, message);
+
   static PageRouteBuilder getSlideNavigation(context, nextScreen) => _EnterExitRoute(exitPage: context, enterPage: nextScreen);
 
   static ListView getHeadLineList(articleList, width, {double fontSize = 14.0, Color color = Colors.white, Axis direction = Axis.vertical, bool isVisible = false}) =>
@@ -25,6 +27,26 @@ class WidgetResource {
   static Row getFeelsLike(currentWeather, units, {Color color = Colors.black})  => _feelsLike(currentWeather, units, color);
 }
 
+Widget _alert(BuildContext context, String message) => AlertDialog(
+      surfaceTintColor: Colors.transparent,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      actions: [
+        GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: const Center(
+              child: Text(
+                'OK',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ))
+      ],
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 18, color: Colors.black),
+      ),
+    );
 Row _feelsLike(
   WeatherDetail? currentWeather,
   String units,

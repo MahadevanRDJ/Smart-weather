@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_weather/main.dart';
 import 'package:smart_weather/provider/dashboard_provider.dart';
 import 'package:smart_weather/utils/app_constant.dart';
 import 'package:smart_weather/utils/route.dart';
@@ -50,7 +49,7 @@ class _AddCityWeather extends State<AddCityWeather> {
                     color: Colors.lightBlueAccent,
                   ),
                 )
-              : Padding(
+              : provider.message.isEmpty ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -84,11 +83,11 @@ class _AddCityWeather extends State<AddCityWeather> {
                                 ),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'Add to start page',
-                                style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500),
+                                widget.isAlreadyAdded ? 'View on home page': 'Add to start page',
+                                style: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500),
                               ),
                             )
                           ],
@@ -96,7 +95,7 @@ class _AddCityWeather extends State<AddCityWeather> {
                       )
                     ],
                   ),
-                ),
+                ) : WidgetResource.showAlert(context, "${provider.message}\n or \nNo results were found for city you searched."),
         ),
       ),
     );

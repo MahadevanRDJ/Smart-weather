@@ -18,6 +18,7 @@ void main() async {
   log("Saved : $cityList");
   AppConstant.isCitiesAdded = cityList.isNotEmpty;
   log('City added ? ${AppConstant.isCitiesAdded}');
+  await AppConstant.getAllCitiesInCountry('IN');
   runApp(const SmartWeather());
 }
 class SmartWeather extends StatefulWidget {

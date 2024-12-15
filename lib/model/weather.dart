@@ -142,6 +142,28 @@ class Main {
   String toString() {
     return 'Main{temp: $temp, feelslike: $feelslike, tempmin: $tempmin, tempmax: $tempmax, pressure: $pressure, sealevel: $sealevel, grndlevel: $grndlevel, humidity: $humidity}';
   }
+
+  void convertCelsiusToFahrenheit() {
+    temp = _convertCtoF(temp!);
+    tempmin = _convertCtoF(tempmin!);
+    tempmax = _convertCtoF(tempmax!);
+    feelslike = _convertCtoF(feelslike!);
+  }
+
+  void convertFahrenheitToCelsius() {
+    temp = _convertFtoC(temp!);
+    tempmin = _convertFtoC(tempmin!);
+    tempmax = _convertFtoC(tempmax!);
+    feelslike = _convertFtoC(feelslike!);
+  }
+
+  num _convertCtoF(num value) {
+    return (value * 9 / 5) + 32;
+  }
+
+  num _convertFtoC(num value) {
+    return (value - 32) * (5 / 9);
+  }
 }
 
 @JsonSerializable()

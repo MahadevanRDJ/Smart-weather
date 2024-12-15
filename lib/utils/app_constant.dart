@@ -1,6 +1,9 @@
 import 'dart:developer';
 
+import 'package:smart_weather/model/general.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../service/weather_service.dart';
 
 class AppConstant {
   static const String sOpenWeatherAPIKEY = "6099f2034bd88cac73b1ec7097b788c6";
@@ -31,6 +34,18 @@ class AppConstant {
   static const sErrorOccurred = "Error occurred.";
 
   static bool isCitiesAdded = false;
+
+  static List<CityDetail> sCityList = [];
+
+  static Future<void> getAllCitiesInCountry(String country) async {
+    try {
+       sCityList = await CityService.getInstance().getAllCitiesByCountry(country);
+      log(sCityList.length.toString());
+
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 
   static String calculateTimeDifferenceBetween({required DateTime startDate, required DateTime endDate}) {
     int seconds = endDate.difference(startDate).inSeconds;

@@ -9,9 +9,14 @@ import '../service/weather_service.dart';
 
 
 class DashBoardProvider extends ChangeNotifier {
-  final int _index = 0;
+  int _index = 0;
 
   int get index => _index;
+
+  void updateIndex(int index) {
+    _index = index;
+    notifyListeners();
+  }
 
   Weathers? weathers;
   List<WeatherDetail?>? weatherList;
@@ -22,12 +27,15 @@ class DashBoardProvider extends ChangeNotifier {
   String _unit = 'ºC';
   String _cityName = '';
   List<Weathers> cityWeatherList = [];
+  String message = "";
+
 
   bool get isLoading => _loading;
 
   String get cityName => _cityName;
 
   Future<void> getWeathers({String city = ""}) async {
+    message = "";
     try {
       weathers = Weathers();
       setLoader(true);
@@ -39,12 +47,15 @@ class DashBoardProvider extends ChangeNotifier {
         getHeadLine();
       }*/
     } catch (e, stackTrace) {
+      setLoader(false);
+      message = e.toString();
       log(e.toString(), stackTrace: stackTrace);
     }
     notifyListeners();
   }
 
   Future<void> getCityWeatherList(List<String> cityList) async {
+    message = "";
     try {
       cityWeatherList = [];
       setLoader(true);
@@ -54,6 +65,8 @@ class DashBoardProvider extends ChangeNotifier {
       }
       setLoader(false);
     } catch (e, stackTrace) {
+      setLoader(false);
+      message = e.toString();
       log(e.toString(), stackTrace: stackTrace);
     }
     notifyListeners();
@@ -87,6 +100,12 @@ class DashBoardProvider extends ChangeNotifier {
 
   void updateUnits(String units) {
     _unit = units;
+    log(units);
+    if(_unit.contains("C")) {
+      convertToCelsius();
+    } else {
+      convertToFahrenheit();
+    }
     notifyListeners();
   }
 
@@ -98,5 +117,23 @@ class DashBoardProvider extends ChangeNotifier {
   void setLoader(bool flag) {
     _loading = flag;
     notifyListeners();
+  }
+
+  void convertToCelsius() {
+    for (var weather in cityWeatherList) {
+      weather.getFiveDayForecast().forEach((current) {
+        current.main!.convertFahrenheitToCelsius();
+      });
+    }
+    log(cityWeatherList[0].getFiveDayForecast().toString());
+  }
+
+  void convertToFahrenheit() {
+    for (var weather in cityWeatherList) {
+      weather.getFiveDayForecast().forEach((current) {
+        current.main!.convertCelsiusToFahrenheit();
+      });
+    }
+    log(cityWeatherList[0].getFiveDayForecast().toString());
   }
 }
